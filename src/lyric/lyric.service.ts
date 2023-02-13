@@ -1,6 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import axios, { Axios } from 'axios';
 import { TokenService } from 'src/token/token.service';
+import { Lyric } from './interfaces/lyric.interface';
 
 @Injectable()
 export class LyricService {
@@ -19,7 +20,7 @@ export class LyricService {
   async findOne(id: string) {
     const token = await this.tokenService.create();
     const lyric = await this.axios
-      .get(`/color-lyrics/v2/track/${id}`, {
+      .get<Lyric>(`/color-lyrics/v2/track/${id}`, {
         headers: { authorization: `Bearer ${token.accessToken}` },
       })
       .then((response) => response.data)
