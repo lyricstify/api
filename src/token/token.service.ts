@@ -5,8 +5,8 @@ import {
   InternalServerErrorException,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import axios, { Axios } from 'axios';
-import { Token } from './interfaces/token.interface';
+import axios, { type Axios } from 'axios';
+import type { Token } from './interfaces/token.interface';
 
 @Injectable()
 export class TokenService {
@@ -18,7 +18,7 @@ export class TokenService {
       headers: {
         Accept: 'application/json',
         'App-Platform': 'WebPlayer',
-        Cookie: this.configService.get('app.spotifyCookie'),
+        Cookie: this.configService.get<string>('app.spotifyCookie'),
       },
     });
   }
@@ -30,11 +30,13 @@ export class TokenService {
       })
       .then((response) => response.data)
       .catch((error) => {
+        const hasErrorStatus =
+          axios.isAxiosError(error) === true && error.response !== undefined;
         const status: [string, number] =
-          axios.isAxiosError(error) && error.response !== undefined
+          hasErrorStatus === true
             ? [error.response.statusText, error.response.status]
             : [
-                'Failed to retrieve Spotify internal token, please check your SPOTIFY_COOKIE environment.',
+                'Failed to retrieve Spotify internal token, please check your SPOTIFY_COOKIE environment',
                 HttpStatus.INTERNAL_SERVER_ERROR,
               ];
 

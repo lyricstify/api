@@ -1,4 +1,4 @@
-import { Line } from './line.interface';
+import type { Line } from './line.interface';
 
 export interface Lyric {
   syncType: string;

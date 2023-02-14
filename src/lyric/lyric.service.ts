@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import axios, { Axios } from 'axios';
+import axios, { type Axios } from 'axios';
 import { TokenService } from 'src/token/token.service';
-import { Lyric } from './interfaces/lyric.interface';
+import type { Lyric } from './interfaces/lyric.interface';
 
 @Injectable()
 export class LyricService {
@@ -25,8 +25,10 @@ export class LyricService {
       })
       .then((response) => response.data)
       .catch((error) => {
+        const hasErrorStatus =
+          axios.isAxiosError(error) === true && error.response !== undefined;
         const status: [string, number] =
-          axios.isAxiosError(error) && error.response !== undefined
+          hasErrorStatus === true
             ? [error.response.statusText, error.response.status]
             : [
                 'Failed to retrieve lyrics data',
