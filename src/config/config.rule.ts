@@ -19,4 +19,8 @@ export default class ConfigRule {
   @IsString()
   @IsNotEmpty()
   SPOTIFY_COOKIE: string;
+
+  @IsString()
+  @IsOptional()
+  REDIS_URL: string;
 }

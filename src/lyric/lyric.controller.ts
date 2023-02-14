@@ -1,6 +1,13 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import {
+  CacheInterceptor,
+  Controller,
+  Get,
+  Param,
+  UseInterceptors,
+} from '@nestjs/common';
 import { LyricService } from './lyric.service';
 
+@UseInterceptors(CacheInterceptor)
 @Controller({ version: '1', path: 'lyrics' })
 export class LyricController {
   constructor(private readonly lyricService: LyricService) {}
