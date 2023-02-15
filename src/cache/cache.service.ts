@@ -12,7 +12,8 @@ export class CacheService implements CacheOptionsFactory {
 
   createCacheOptions(): CacheModuleOptions {
     const url = this.configService.get<string>('cache.redisUrl');
+    const ttl = this.configService.get<number>('cache.ttl');
 
-    return url !== undefined ? { store, url, ttl: 0 } : {};
+    return url !== undefined ? { store, url, ttl } : { ttl };
   }
 }

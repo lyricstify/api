@@ -12,8 +12,8 @@ export default class ConfigRule {
   @IsOptional()
   APP_ENV: string;
 
-  @IsOptional()
   @IsNumber()
+  @IsOptional()
   APP_PORT: number;
 
   @IsString()
@@ -23,4 +23,8 @@ export default class ConfigRule {
   @IsString()
   @IsOptional()
   REDIS_URL: string;
+
+  @IsNumber()
+  @IsOptional()
+  CACHE_TTL: number;
 }
