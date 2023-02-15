@@ -4,7 +4,7 @@ import {
   Injectable,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { redisStore as store } from 'cache-manager-redis-yet';
+import { redisStore as store } from 'cache-manager-ioredis-yet';
 
 @Injectable()
 export class CacheService implements CacheOptionsFactory {
@@ -14,6 +14,9 @@ export class CacheService implements CacheOptionsFactory {
     const url = this.configService.get<string>('cache.redisUrl');
     const ttl = this.configService.get<number>('cache.ttl');
 
-    return url !== undefined ? { store, url, ttl } : { ttl };
+    return {
+      ttl,
+      ...(url !== undefined && { store, url }),
+    };
   }
 }
