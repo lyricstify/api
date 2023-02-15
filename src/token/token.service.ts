@@ -1,47 +1,43 @@
-import {
-  HttpException,
-  HttpStatus,
-  Injectable,
-  InternalServerErrorException,
-} from '@nestjs/common';
+import { HttpService } from '@nestjs/axios';
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import axios, { type Axios } from 'axios';
-import type { Token } from './interfaces/token.interface';
+import type { AxiosRequestConfig, AxiosResponse } from 'axios';
+import { firstValueFrom } from 'rxjs';
+import { catchHttpException } from 'src/http/catch-http.exception';
+import { TokenEntity } from './entities/token.interface';
 
 @Injectable()
 export class TokenService {
-  private readonly axios: Axios;
+  private readonly baseURL: string = 'https://open.spotify.com';
 
-  constructor(private readonly configService: ConfigService) {
-    this.axios = axios.create({
-      baseURL: 'https://open.spotify.com',
-      headers: {
-        Accept: 'application/json',
-        'App-Platform': 'WebPlayer',
-        Cookie: this.configService.get<string>('app.spotifyCookie'),
-      },
-    });
-  }
+  private readonly headers: AxiosRequestConfig['headers'] = {
+    Accept: 'application/json',
+    'App-Platform': 'WebPlayer',
+    Cookie: this.configService.get<string>('app.spotifyCookie'),
+  };
+
+  constructor(
+    private readonly configService: ConfigService,
+    private readonly httpService: HttpService,
+  ) {}
 
   async create() {
-    const token = await this.axios
-      .get<Token>('/get_access_token', {
+    const request = this.httpService
+      .get<TokenEntity>('/get_access_token', {
+        baseURL: this.baseURL,
+        headers: this.headers,
         params: { reason: 'transport', productType: 'web_player' },
       })
-      .then((response) => response.data)
-      .catch((error) => {
-        const hasErrorStatus =
-          axios.isAxiosError(error) === true && error.response !== undefined;
-        const status: [string, number] =
-          hasErrorStatus === true
-            ? [error.response.statusText, error.response.status]
-            : [
-                'Failed to retrieve Spotify internal token, please check your SPOTIFY_COOKIE environment',
-                HttpStatus.INTERNAL_SERVER_ERROR,
-              ];
+      .pipe(
+        catchHttpException({
+          defaultStatusText:
+            'Failed to retrieve Spotify internal token, please check your SPOTIFY_COOKIE environment',
+        }),
+      );
 
-        throw new HttpException(...status);
-      });
+    const { data: token } = (await firstValueFrom(
+      request,
+    )) as AxiosResponse<TokenEntity>;
 
     if (token.isAnonymous === true) {
       throw new InternalServerErrorException(
@@ -49,6 +45,6 @@ export class TokenService {
       );
     }
 
-    return token;
+    return new TokenEntity(token);
   }
 }

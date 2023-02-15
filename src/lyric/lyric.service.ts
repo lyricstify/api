@@ -1,5 +1,8 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import axios, { type Axios } from 'axios';
+import { HttpService } from '@nestjs/axios';
+import { Injectable } from '@nestjs/common';
+import type { AxiosRequestConfig, AxiosResponse } from 'axios';
+import { firstValueFrom } from 'rxjs';
+import { catchHttpException } from 'src/http/catch-http.exception';
 import { TokenService } from 'src/token/token.service';
 import { LineEntity } from './entities/line.entity';
 import { LyricEntity } from './entities/lyric.entity';
@@ -7,38 +10,37 @@ import { TrackEntity } from './entities/track.entity';
 
 @Injectable()
 export class LyricService {
-  private readonly axios: Axios;
+  private readonly baseURL: string = 'https://spclient.wg.spotify.com';
 
-  constructor(private readonly tokenService: TokenService) {
-    this.axios = axios.create({
-      baseURL: 'https://spclient.wg.spotify.com/',
-      headers: {
-        Accept: 'application/json',
-        'App-Platform': 'WebPlayer',
-      },
-    });
-  }
+  private readonly headers: AxiosRequestConfig['headers'] = {
+    Accept: 'application/json',
+    'App-Platform': 'WebPlayer',
+  };
+
+  constructor(
+    private readonly tokenService: TokenService,
+    private readonly httpService: HttpService,
+  ) {}
 
   async findOne(id: string) {
     const token = await this.tokenService.create();
-    const track = await this.axios
+    const request = this.httpService
       .get<TrackEntity>(`/color-lyrics/v2/track/${id}`, {
-        headers: { authorization: `Bearer ${token.accessToken}` },
+        baseURL: this.baseURL,
+        headers: {
+          ...this.headers,
+          authorization: `Bearer ${token.accessToken}`,
+        },
       })
-      .then((response) => response.data)
-      .catch((error) => {
-        const hasErrorStatus =
-          axios.isAxiosError(error) === true && error.response !== undefined;
-        const status: [string, number] =
-          hasErrorStatus === true
-            ? [error.response.statusText, error.response.status]
-            : [
-                'Failed to retrieve lyrics data',
-                HttpStatus.INTERNAL_SERVER_ERROR,
-              ];
+      .pipe(
+        catchHttpException({
+          defaultStatusText: 'Failed to retrieve lyrics data',
+        }),
+      );
 
-        throw new HttpException(...status);
-      });
+    const { data: track } = (await firstValueFrom(
+      request,
+    )) as AxiosResponse<TrackEntity>;
 
     return new TrackEntity({
       ...track,
