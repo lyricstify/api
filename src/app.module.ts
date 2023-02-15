@@ -5,10 +5,10 @@ import { configValidate } from './config/config.validate';
 import { LyricModule } from './lyric/lyric.module';
 import { TokenModule } from './token/token.module';
 import cacheConfig from './config/cache.config';
-import { CacheService } from './cache/cache.service';
+import { CacheService } from './common/cache/cache.service';
 import redisConfig from './config/redis.config';
 import { ThrottlerModule } from '@nestjs/throttler';
-import { ThrottlerService } from './throttler/throttler.service';
+import { ThrottlerService } from './common/throttler/throttler.service';
 import throttlerConfig from './config/throttler.config';
 
 @Module({

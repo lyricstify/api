@@ -3,7 +3,7 @@ import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import type { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { firstValueFrom } from 'rxjs';
-import { catchHttpException } from 'src/http/catch-http.exception';
+import { catchHttpException } from 'src/common/http/catch-http.exception';
 import { TokenEntity } from './entities/token.interface';
 
 @Injectable()
