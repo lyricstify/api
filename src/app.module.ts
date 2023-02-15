@@ -7,6 +7,9 @@ import { TokenModule } from './token/token.module';
 import cacheConfig from './config/cache.config';
 import { CacheService } from './cache/cache.service';
 import redisConfig from './config/redis.config';
+import { ThrottlerModule } from '@nestjs/throttler';
+import { ThrottlerService } from './throttler/throttler.service';
+import throttlerConfig from './config/throttler.config';
 
 @Module({
   imports: [
@@ -14,9 +17,12 @@ import redisConfig from './config/redis.config';
       isGlobal: true,
       useClass: CacheService,
     }),
+    ThrottlerModule.forRootAsync({
+      useClass: ThrottlerService,
+    }),
     ConfigModule.forRoot({
       isGlobal: true,
-      load: [appConfig, cacheConfig, redisConfig],
+      load: [appConfig, cacheConfig, redisConfig, throttlerConfig],
       validate: configValidate,
     }),
     LyricModule,
