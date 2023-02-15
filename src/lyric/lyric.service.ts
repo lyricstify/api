@@ -2,7 +2,7 @@ import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
 import type { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { firstValueFrom } from 'rxjs';
-import { catchHttpException } from 'src/common/http/catch-http.exception';
+import { httpCatchAxiosError } from '../common/http/http.catch-axios-error';
 import { TokenService } from 'src/token/token.service';
 import { LineEntity } from './entities/line.entity';
 import { LyricEntity } from './entities/lyric.entity';
@@ -33,7 +33,7 @@ export class LyricService {
         },
       })
       .pipe(
-        catchHttpException({
+        httpCatchAxiosError({
           defaultStatusText: 'Failed to retrieve lyrics data',
         }),
       );

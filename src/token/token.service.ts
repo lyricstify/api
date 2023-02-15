@@ -3,7 +3,7 @@ import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import type { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { firstValueFrom } from 'rxjs';
-import { catchHttpException } from 'src/common/http/catch-http.exception';
+import { httpCatchAxiosError } from '../common/http/http.catch-axios-error';
 import { TokenEntity } from './entities/token.interface';
 
 @Injectable()
@@ -29,7 +29,7 @@ export class TokenService {
         params: { reason: 'transport', productType: 'web_player' },
       })
       .pipe(
-        catchHttpException({
+        httpCatchAxiosError({
           defaultStatusText:
             'Failed to retrieve Spotify internal token, please check your SPOTIFY_COOKIE environment',
         }),

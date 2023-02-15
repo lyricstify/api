@@ -2,7 +2,7 @@ import { HttpException, HttpStatus } from '@nestjs/common';
 import { AxiosError } from 'axios';
 import { catchError } from 'rxjs';
 
-export const catchHttpException = ({
+export const httpCatchAxiosError = ({
   defaultStatusText,
   defaultStatusCode = HttpStatus.INTERNAL_SERVER_ERROR,
 }: {
