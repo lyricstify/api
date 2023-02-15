@@ -36,3 +36,6 @@ lerna-debug.log*
 
 # Env
 .env
+
+# NestJS
+.nestjs_repl_history
