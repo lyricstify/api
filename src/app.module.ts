@@ -6,6 +6,7 @@ import { LyricModule } from './lyric/lyric.module';
 import { TokenModule } from './token/token.module';
 import cacheConfig from './config/cache.config';
 import { CacheService } from './cache/cache.service';
+import redisConfig from './config/redis.config';
 
 @Module({
   imports: [
@@ -15,7 +16,7 @@ import { CacheService } from './cache/cache.service';
     }),
     ConfigModule.forRoot({
       isGlobal: true,
-      load: [appConfig, cacheConfig],
+      load: [appConfig, cacheConfig, redisConfig],
       validate: configValidate,
     }),
     LyricModule,

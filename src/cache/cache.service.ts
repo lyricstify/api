@@ -11,7 +11,7 @@ export class CacheService implements CacheOptionsFactory {
   constructor(private configService: ConfigService) {}
 
   createCacheOptions(): CacheModuleOptions {
-    const url = this.configService.get<string>('cache.redisUrl');
+    const url = this.configService.get<string>('redis.url');
     const ttl = this.configService.get<number>('cache.ttl');
 
     return {
