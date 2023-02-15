@@ -1,5 +1,6 @@
 import {
   CacheInterceptor,
+  ClassSerializerInterceptor,
   Controller,
   Get,
   Header,
@@ -8,7 +9,7 @@ import {
 } from '@nestjs/common';
 import { LyricService } from './lyric.service';
 
-@UseInterceptors(CacheInterceptor)
+@UseInterceptors(ClassSerializerInterceptor, CacheInterceptor)
 @Controller({ version: '1', path: 'lyrics' })
 export class LyricController {
   constructor(private readonly lyricService: LyricService) {}

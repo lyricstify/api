@@ -1,7 +1,9 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import axios, { type Axios } from 'axios';
 import { TokenService } from 'src/token/token.service';
-import type { Lyric } from './interfaces/lyric.interface';
+import { LineEntity } from './entities/line.entity';
+import { LyricEntity } from './entities/lyric.entity';
+import { TrackEntity } from './entities/track.entity';
 
 @Injectable()
 export class LyricService {
@@ -19,8 +21,8 @@ export class LyricService {
 
   async findOne(id: string) {
     const token = await this.tokenService.create();
-    const lyric = await this.axios
-      .get<Lyric>(`/color-lyrics/v2/track/${id}`, {
+    const track = await this.axios
+      .get<TrackEntity>(`/color-lyrics/v2/track/${id}`, {
         headers: { authorization: `Bearer ${token.accessToken}` },
       })
       .then((response) => response.data)
@@ -38,6 +40,12 @@ export class LyricService {
         throw new HttpException(...status);
       });
 
-    return lyric;
+    return new TrackEntity({
+      ...track,
+      lyrics: new LyricEntity({
+        ...track.lyrics,
+        lines: track.lyrics.lines.map((line) => new LineEntity(line)),
+      }),
+    });
   }
 }
