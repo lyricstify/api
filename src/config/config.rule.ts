@@ -27,12 +27,4 @@ export default class ConfigRule {
   @IsNumber()
   @IsOptional()
   CACHE_TTL: number;
-
-  @IsNumber()
-  @IsOptional()
-  THROTTLE_TTL: number;
-
-  @IsNumber()
-  @IsOptional()
-  THROTTLE_LIMIT: number;
 }

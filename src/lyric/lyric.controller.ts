@@ -5,14 +5,11 @@ import {
   Get,
   Header,
   Param,
-  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import { ThrottlerGuard } from '@nestjs/throttler';
 import { LyricService } from './lyric.service';
 
 @Controller({ version: '1', path: 'lyrics' })
-@UseGuards(ThrottlerGuard)
 @UseInterceptors(ClassSerializerInterceptor, CacheInterceptor)
 export class LyricController {
   constructor(private readonly lyricService: LyricService) {}
