@@ -17,6 +17,6 @@ export class LyricController {
   @Get(':id')
   @Header('Cache-Control', 's-maxage=3600, stale-while-revalidate=86400')
   async findOne(@Param('id') id: string) {
-    return this.lyricService.findOne(id);
+    return await this.lyricService.findOne(id);
   }
 }
