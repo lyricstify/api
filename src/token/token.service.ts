@@ -4,7 +4,7 @@ import { ConfigService } from '@nestjs/config';
 import type { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { firstValueFrom } from 'rxjs';
 import { httpCatchAxiosError } from '../common/http/http.catch-axios-error';
-import { TokenEntity } from './entities/token.interface';
+import { TokenEntity } from './entities/token.entity';
 
 @Injectable()
 export class TokenService {

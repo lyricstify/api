@@ -3,7 +3,7 @@ import { Injectable } from '@nestjs/common';
 import type { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { firstValueFrom } from 'rxjs';
 import { httpCatchAxiosError } from '../common/http/http.catch-axios-error';
-import { TokenService } from 'src/token/token.service';
+import { TokenService } from '../token/token.service';
 import { LineEntity } from './entities/line.entity';
 import { LyricEntity } from './entities/lyric.entity';
 import { TrackEntity } from './entities/track.entity';
