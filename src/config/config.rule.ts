@@ -5,7 +5,7 @@ import {
   IsOptional,
   IsString,
 } from 'class-validator';
-import ConfigEnvironment from './config.env';
+import ConfigEnvironment from '../common/config/config.env';
 
 export default class ConfigRule {
   @IsEnum(ConfigEnvironment)

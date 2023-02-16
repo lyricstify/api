@@ -1,12 +1,13 @@
 import { CacheModule, Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import appConfig from './config/app.config';
-import { configValidate } from './config/config.validate';
+import { configValidate } from './common/config/config.validate';
 import { LyricModule } from './lyric/lyric.module';
 import { TokenModule } from './token/token.module';
 import cacheConfig from './config/cache.config';
 import { CacheService } from './common/cache/cache.service';
 import redisConfig from './config/redis.config';
+import ConfigRule from './config/config.rule';
 
 @Module({
   imports: [
@@ -17,7 +18,7 @@ import redisConfig from './config/redis.config';
     ConfigModule.forRoot({
       isGlobal: true,
       load: [appConfig, cacheConfig, redisConfig],
-      validate: configValidate,
+      validate: configValidate(ConfigRule),
     }),
     LyricModule,
     TokenModule,
