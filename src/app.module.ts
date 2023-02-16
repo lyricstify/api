@@ -1,4 +1,4 @@
-import { CacheModule, Module } from '@nestjs/common';
+import { CacheModule, DynamicModule, Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import appConfig from './config/app.config';
 import { configValidate } from './common/config/config.validate';
@@ -9,19 +9,25 @@ import { CacheService } from './common/cache/cache.service';
 import redisConfig from './config/redis.config';
 import ConfigRule from './config/config.rule';
 
-@Module({
-  imports: [
-    CacheModule.registerAsync({
-      isGlobal: true,
-      useClass: CacheService,
-    }),
-    ConfigModule.forRoot({
-      isGlobal: true,
-      load: [appConfig, cacheConfig, redisConfig],
-      validate: configValidate(ConfigRule),
-    }),
-    LyricModule,
-    TokenModule,
-  ],
-})
-export class AppModule {}
+@Module({})
+export class AppModule {
+  static register(envFilePath: string | string[] = '.env'): DynamicModule {
+    return {
+      module: AppModule,
+      imports: [
+        CacheModule.registerAsync({
+          isGlobal: true,
+          useClass: CacheService,
+        }),
+        ConfigModule.forRoot({
+          envFilePath,
+          isGlobal: true,
+          load: [appConfig, cacheConfig, redisConfig],
+          validate: configValidate(ConfigRule),
+        }),
+        LyricModule,
+        TokenModule,
+      ],
+    };
+  }
+}
