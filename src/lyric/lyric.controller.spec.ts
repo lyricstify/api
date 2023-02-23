@@ -30,9 +30,7 @@ describe('LyricController', () => {
 
       jest
         .spyOn(lyricService, 'findOne')
-        .mockImplementation(
-          async () => new Promise((resolve) => resolve(data)),
-        );
+        .mockImplementation(() => new Promise((resolve) => resolve(data)));
 
       expect(await lyricController.findOne('')).toEqual(data);
     });

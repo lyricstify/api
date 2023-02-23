@@ -21,8 +21,7 @@ describe('LyricService', () => {
         if (token === TokenService) {
           return {
             create: jest.fn(
-              async () =>
-                new Promise((resolve) => resolve(createTokenEntity())),
+              () => new Promise((resolve) => resolve(createTokenEntity())),
             ),
           };
         }
