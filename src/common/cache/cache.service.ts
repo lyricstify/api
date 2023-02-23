@@ -13,19 +13,16 @@ export class CacheService implements CacheOptionsFactory {
   constructor(private configService: ConfigService) {}
 
   async createCacheOptions(): Promise<CacheModuleOptions<RedisClientOptions>> {
-    const env = this.configService.get<`${ConfigEnvironment}`>('app.env');
     const url = this.configService.get<string>('redis.url');
     const ttl = this.configService.get<number>('cache.ttl');
 
     return {
       ttl,
-      ...(url !== undefined && env !== 'testing'
-        ? {
+      ...(url !== undefined && {
             store: redisStore,
             url,
             pingInterval: 4 * 60 * 1000,
-          }
-        : {}),
+      }),
     };
   }
 }
