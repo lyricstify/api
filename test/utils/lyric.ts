@@ -2,7 +2,7 @@ import type { TrackEntity } from '../../src/lyric/entities/track.entity';
 
 export const createTrackEntity = (): TrackEntity => ({
   lyrics: {
-    syncType: 'syncType',
+    syncType: 'LINE_SYNCED',
     lines: [
       {
         startTimeMs: '0',
