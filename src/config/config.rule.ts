@@ -26,5 +26,13 @@ export default class ConfigRule {
 
   @IsNumber()
   @IsOptional()
-  CACHE_TTL: number;
+  REDIS_PORT: number;
+
+  @IsString()
+  @IsOptional()
+  REDIS_PASSWORD: string;
+
+  @IsNumber()
+  @IsOptional()
+  REDIS_TTL: number;
 }

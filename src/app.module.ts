@@ -4,7 +4,6 @@ import appConfig from './config/app.config';
 import { configValidate } from './common/config/config.validate';
 import { LyricModule } from './lyric/lyric.module';
 import { TokenModule } from './token/token.module';
-import cacheConfig from './config/cache.config';
 import { CacheService } from './common/cache/cache.service';
 import redisConfig from './config/redis.config';
 import ConfigRule from './config/config.rule';
@@ -22,7 +21,7 @@ export class AppModule {
         ConfigModule.forRoot({
           envFilePath,
           isGlobal: true,
-          load: [appConfig, cacheConfig, redisConfig],
+          load: [appConfig, redisConfig],
           validate: configValidate(ConfigRule),
         }),
         LyricModule,
