@@ -1,6 +1,6 @@
-import { CacheModule } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { createTrackEntity } from '../../test/utils/lyric';
+import { CacheSynchronizedLyricsInterceptor } from './interceptors/cache-synchronized-lyrics.interceptor';
 import { LyricController } from './lyric.controller';
 import { LyricService } from './lyric.service';
 
@@ -10,9 +10,10 @@ describe('LyricController', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      imports: [CacheModule.register()],
       controllers: [LyricController],
     })
+      .overrideInterceptor(CacheSynchronizedLyricsInterceptor)
+      .useValue({})
       .useMocker((token) => {
         if (token === LyricService) {
           return { findOne: jest.fn() };
