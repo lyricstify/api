@@ -22,7 +22,7 @@ export default class ConfigRule {
 
   @IsString()
   @IsOptional()
-  REDIS_URL: string;
+  REDIS_HOST: string;
 
   @IsNumber()
   @IsOptional()
