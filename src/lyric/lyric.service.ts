@@ -23,8 +23,8 @@ export class LyricService {
   ) {}
 
   async findOne(id: string) {
-    const token = await this.tokenService.create();
-    const request = this.httpService
+    const token = await this.tokenService.get();
+    const request$ = this.httpService
       .get<TrackEntity>(`/color-lyrics/v2/track/${id}`, {
         baseURL: this.baseURL,
         headers: {
@@ -39,7 +39,7 @@ export class LyricService {
       );
 
     const { data: track } = (await firstValueFrom(
-      request,
+      request$,
     )) as AxiosResponse<TrackEntity>;
 
     return new TrackEntity({

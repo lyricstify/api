@@ -20,7 +20,7 @@ describe('LyricService', () => {
       .useMocker((token) => {
         if (token === TokenService) {
           return {
-            create: jest.fn(
+            get: jest.fn(
               () => new Promise((resolve) => resolve(createTokenEntity())),
             ),
           };

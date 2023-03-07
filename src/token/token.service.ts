@@ -21,8 +21,8 @@ export class TokenService {
     private readonly httpService: HttpService,
   ) {}
 
-  async create() {
-    const request = this.httpService
+  async get() {
+    const request$ = this.httpService
       .get<TokenEntity>('/get_access_token', {
         baseURL: this.baseURL,
         headers: this.headers,
@@ -36,7 +36,7 @@ export class TokenService {
       );
 
     const { data: token } = (await firstValueFrom(
-      request,
+      request$,
     )) as AxiosResponse<TokenEntity>;
 
     if (token.isAnonymous === true) {

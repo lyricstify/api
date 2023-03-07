@@ -35,7 +35,7 @@ describe('TokenService', () => {
     httpService = module.get<HttpService>(HttpService);
   });
 
-  describe('create', () => {
+  describe('get', () => {
     it('should be able to generate token', async () => {
       const data = createTokenEntity();
 
@@ -43,7 +43,7 @@ describe('TokenService', () => {
         .spyOn(httpService, 'get')
         .mockImplementation(() => of(createAxiosResponse({ data })));
 
-      expect(await tokenService.create()).toEqual(data);
+      expect(await tokenService.get()).toEqual(data);
     });
 
     it('should be able to throw an internal server error if the provided spotify token is anonymous', async () => {
@@ -53,7 +53,7 @@ describe('TokenService', () => {
         .spyOn(httpService, 'get')
         .mockImplementation(() => of(createAxiosResponse({ data })));
 
-      await expect(tokenService.create()).rejects.toThrow(
+      await expect(tokenService.get()).rejects.toThrow(
         InternalServerErrorException,
       );
     });
@@ -77,7 +77,7 @@ describe('TokenService', () => {
           }),
       );
 
-      await expect(tokenService.create()).rejects.toThrow(
+      await expect(tokenService.get()).rejects.toThrow(
         new HttpException('Not Found', HttpStatus.NOT_FOUND),
       );
     });
