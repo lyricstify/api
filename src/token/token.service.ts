@@ -1,7 +1,13 @@
 import { HttpService } from '@nestjs/axios';
-import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import {
+  CACHE_MANAGER,
+  Inject,
+  Injectable,
+  InternalServerErrorException,
+} from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import type { AxiosRequestConfig, AxiosResponse } from 'axios';
+import type { AxiosRequestConfig } from 'axios';
+import { Cache } from 'cache-manager';
 import { firstValueFrom } from 'rxjs';
 import { httpCatchAxiosError } from '../common/http/http.catch-axios-error';
 import { TokenEntity } from './entities/token.entity';
@@ -19,9 +25,10 @@ export class TokenService {
   constructor(
     private readonly configService: ConfigService,
     private readonly httpService: HttpService,
+    @Inject(CACHE_MANAGER) private readonly cacheManager: Cache,
   ) {}
 
-  async get() {
+  async create() {
     const request$ = this.httpService
       .get<TokenEntity>('/get_access_token', {
         baseURL: this.baseURL,
@@ -44,5 +51,24 @@ export class TokenService {
     }
 
     return new TokenEntity(token);
+  }
+
+  async findOneOrCreate() {
+    const key = 'access_token';
+    const cached = await this.cacheManager.get<TokenEntity>(key);
+
+    if (cached !== undefined) {
+      return cached;
+    }
+
+    const token = await this.create();
+    await this.cacheManager.set(
+      key,
+      token,
+      // Make sure the cached token is expired 5s faster before its actual expired time
+      token.accessTokenExpirationTimestampMs - 5000 - new Date().getTime(),
+    );
+
+    return token;
   }
 }
