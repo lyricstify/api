@@ -35,9 +35,7 @@ export class TokenService {
         }),
       );
 
-    const { data: token } = (await firstValueFrom(
-      request$,
-    )) as AxiosResponse<TokenEntity>;
+    const { data: token } = await firstValueFrom(request$);
 
     if (token.isAnonymous === true) {
       throw new InternalServerErrorException(

@@ -1,6 +1,6 @@
 import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
-import type { AxiosRequestConfig, AxiosResponse } from 'axios';
+import type { AxiosRequestConfig } from 'axios';
 import { firstValueFrom } from 'rxjs';
 import { httpCatchAxiosError } from '../common/http/http.catch-axios-error';
 import { TokenService } from '../token/token.service';
@@ -23,7 +23,7 @@ export class LyricService {
   ) {}
 
   async findOne(id: string) {
-    const token = await this.tokenService.get();
+    const token = await this.tokenService.findOneOrCreate();
     const request$ = this.httpService
       .get<TrackEntity>(`/color-lyrics/v2/track/${id}`, {
         baseURL: this.baseURL,
@@ -38,9 +38,7 @@ export class LyricService {
         }),
       );
 
-    const { data: track } = (await firstValueFrom(
-      request$,
-    )) as AxiosResponse<TrackEntity>;
+    const { data: track } = await firstValueFrom(request$);
 
     return new TrackEntity({
       ...track,
