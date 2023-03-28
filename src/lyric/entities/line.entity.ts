@@ -1,12 +1,16 @@
+import { ApiProperty } from '@nestjs/swagger';
 import { Exclude, Transform } from 'class-transformer';
 
 export class LineEntity {
+  @ApiProperty({ type: Number })
   @Transform(({ value }) => Number(value))
   startTimeMs: string;
+  @ApiProperty()
   words: string;
   @Exclude()
   syllables: unknown[];
-  @Transform(({ value }) => Number(value))
+  @ApiProperty({ type: Number })
+  @Exclude()
   endTimeMs: string;
 
   constructor(partial: Partial<LineEntity>) {
