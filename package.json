@@ -1,7 +1,7 @@
 {
   "name": "@lyricstify/api",
   "version": "0.0.1",
-  "description": "",
+  "description": "Discover time-synced Spotify lyrics.",
   "author": "Yusuf T.",
   "private": true,
   "license": "MIT",
