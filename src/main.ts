@@ -11,36 +11,6 @@ import helmet from 'helmet';
 import { AppModule } from './app.module';
 import ConfigEnvironment from './common/config/config.env';
 
-const createSwaggerDocument = ({
-  app,
-  port,
-}: {
-  app: NestExpressApplication;
-  port: number;
-}) => {
-  const config = new DocumentBuilder()
-    .setTitle('Lyricstify API')
-    .setDescription('Discover time-synced Spotify song lyrics.')
-    .setExternalDoc('GitHub Repository', 'https://github.com/lyricstify/api')
-    .setVersion('1.0')
-    .addServer(
-      'https://api.lyricstify.vercel.app/',
-      'Production server Lyricstify API.',
-    )
-    .addServer(
-      `http://localhost:${port}`,
-      'Local server Lyricstify API for development.',
-    )
-    .addTag('lyrics')
-    .build();
-
-  const options: SwaggerDocumentOptions = {
-    operationIdFactory: (controllerKey, methodKey) => methodKey,
-  };
-
-  return SwaggerModule.createDocument(app, config, options);
-};
-
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(
     AppModule.register(),
@@ -56,7 +26,28 @@ async function bootstrap() {
   app.enableVersioning({ type: VersioningType.URI });
 
   if (env === 'development') {
-    SwaggerModule.setup('docs', app, createSwaggerDocument({ app, port }));
+    const config = new DocumentBuilder()
+      .setTitle('Lyricstify API')
+      .setDescription('Discover time-synced Spotify song lyrics.')
+      .setExternalDoc('GitHub Repository', 'https://github.com/lyricstify/api')
+      .setVersion('1.0')
+      .addServer(
+        'https://api.lyricstify.vercel.app/',
+        'Production server Lyricstify API.',
+      )
+      .addServer(
+        `http://localhost:${port}`,
+        'Local server Lyricstify API for development.',
+      )
+      .addTag('lyrics')
+      .build();
+
+    const options: SwaggerDocumentOptions = {
+      operationIdFactory: (controllerKey, methodKey) => methodKey,
+    };
+    const document = SwaggerModule.createDocument(app, config, options);
+
+    SwaggerModule.setup('docs', app, document);
   }
 
   await app.listen(port);
