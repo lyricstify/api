@@ -1,4 +1,4 @@
-<div style="text-align: center">
+<div align="center">
   <p><a href="https://github.com/lyricstify/api"><img src="https://raw.githubusercontent.com/lyricstify/api/main/assets/lyricstify.svg" alt="Lyricstify Logo" height="60"/></a></p>
   <h1>Lyricstify API</h1>
   <p>Discover time-synced Spotify lyrics.</p>
@@ -57,4 +57,4 @@ Please see [this page](https://github.com/lyricstify/api/blob/main/CONTRIBUTING.
 
 ## License
 
-This application is licensed under the [MIT license](https://github.com/lyricstify/api/blob/main/LICENSE.md).
+This application is licensed under the [MIT license](https://github.com/lyricstify/api/blob/main/LICENSE).
