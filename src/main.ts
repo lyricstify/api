@@ -5,7 +5,7 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import helmet from 'helmet';
 import { AppModule } from './app.module';
 
-export async function bootstrap() {
+export default async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(
     AppModule.register(),
     {
