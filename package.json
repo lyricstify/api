@@ -22,8 +22,7 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:unit": "jest --testRegex \".*\\.spec\\.ts$\"",
-    "test:e2e": "jest --testRegex \".*\\.e2e-spec\\.ts$\"",
-    "prepare": "is-ci || husky install"
+    "test:e2e": "jest --testRegex \".*\\.e2e-spec\\.ts$\""
   },
   "dependencies": {
     "@nestjs/axios": "^2.0.0",
