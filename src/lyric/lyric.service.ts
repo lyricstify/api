@@ -34,8 +34,7 @@ export class LyricService {
       })
       .pipe(
         httpCatchAxiosError({
-          defaultStatusText:
-            'Not found, failed to retrieve Spotify song lyrics',
+          defaultStatusText: 'Failed to retrieve lyrics data',
         }),
       );
 

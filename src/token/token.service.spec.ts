@@ -85,7 +85,9 @@ describe('TokenService', () => {
           }),
       );
 
-      await expect(tokenService.create()).rejects.toThrow(HttpException);
+      await expect(tokenService.create()).rejects.toThrow(
+        new HttpException('Not Found', HttpStatus.NOT_FOUND),
+      );
     });
   });
 

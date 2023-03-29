@@ -7,7 +7,6 @@ import {
   NestInterceptor,
 } from '@nestjs/common';
 import { Cache } from 'cache-manager';
-import { instanceToPlain } from 'class-transformer';
 import { Request } from 'express';
 import { Observable, of, tap } from 'rxjs';
 import { TrackEntity } from '../entities/track.entity';
@@ -31,7 +30,7 @@ export class CacheSynchronizedLyricsInterceptor implements NestInterceptor {
     return next.handle().pipe(
       tap(async (result) => {
         if (result.lyrics.syncType === 'LINE_SYNCED') {
-          await this.cacheManager.set(key, instanceToPlain(result));
+          await this.cacheManager.set(key, result);
         }
       }),
     );

@@ -1,68 +1,73 @@
-<div align="center">
-  <p><a href="https://github.com/lyricstify/api"><img src="https://raw.githubusercontent.com/lyricstify/api/main/assets/lyricstify.svg" alt="Lyricstify Logo" height="60"/></a></p>
-  <h1>Lyricstify API</h1>
-  <p>Discover time-synced Spotify lyrics.</p>
-  <p>
-    <img alt="GitHub Workflow Test Status" src="https://img.shields.io/github/actions/workflow/status/lyricstify/api/test.yml?label=test&logo=github&style=flat-square&color=1ed760">
-    <img alt="Code Coverage" src="https://img.shields.io/codecov/c/github/lyricstify/api?color=white&logo=codecov&style=flat-square">
-    <img alt="License" src="https://img.shields.io/github/license/lyricstify/api?style=flat-square&color=1ed760">
-    <img alt="NestJs Version" src="https://img.shields.io/github/package-json/dependency-version/lyricstify/api/@nestjs/core?color=white&label=nestjs&logo=nestjs&logoColor=red&style=flat-square">
-    <img alt="TypeScript Version" src="https://img.shields.io/github/package-json/dependency-version/lyricstify/api/dev/typescript?color=1ed760&logo=typescript&style=flat-square">
-  </p>
+<p align="center">
+  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
+</p>
 
-  <p>
-    <a href="#introduction">Introduction</a>
-    ·
-    <a href="#installation">Installation</a>
-    ·
-    <a href="#api-documentation">API Documentation</a>
-    ·
-    <a href="#roadmap">Roadmap</a>
-    ·
-    <a href="#contributing">Contributing</a>
-    ·
-    <a href="#license">License</a>
-  </p>
-</div>
+[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
+[circleci-url]: https://circleci.com/gh/nestjs/nest
 
-## Introduction
+  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
+    <p align="center">
+<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
+<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
+<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
+<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
+<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
+<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
+<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
+<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
+  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
+    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
+  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
+</p>
+  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
+  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
-This is the backend API for discovering time-synced Spotify song lyrics that are used by [Lyricstify](https://github.com/lyricstify/lyricstify).
+## Description
+
+[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
 ## Installation
 
-Since this project is built on top of Node.js so you need to [download](https://nodejs.org/en/download) and install it before start using this repository. Then, to install this repository you can follow these steps:
+```bash
+$ npm install
+```
 
-- [Clone this repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository)
-- Open the project directory and run the following command to install the required dependencies:
-  ```bash
-  npm install
-  ```
-- Copy the `.env.example` file to the `.env`
-- Inside the `.env` file, pay attention to `SPOTIFY_COOKIE` you need to fill it in based on your Spotify account cookie. Here is how you can get your cookie:
-  - Open your browser and open _Developer Tools_ by clicking F12
-  - Navigate to the _Network_ tab inside your _Developer Tools_
-  - Then visit https://open.spotify.com/ and make sure that you already logged in
-  - Inside the _Network_ tab, see the first request to `open.spotify.com`
-  - Then see the _Request Headers_ tab, and copy the _cookie_ value inside it
-- You can set `APP_ENV` (`development`, `testing`, or `production`), `APP_PORT`, and optionally you can configure Redis connection via variables that have `REDIS_` prefix
-- Finally, start the server using the following command:
-  ```
-  npm run start
-  ```
+## Running the app
 
-## API Documentation
+```bash
+# development
+$ npm run start
 
-Please visit the [following page](https://lyricstify.github.io/api) to see the API documentation.
+# watch mode
+$ npm run start:dev
 
-## Roadmap
+# production mode
+$ npm run start:prod
+```
 
-Please visit the following page to view the [Lyricstify API roadmap](https://github.com/lyricstify/api/projects). If the task hasn't been assigned to anyone yet and you'd like to try working on it, you're welcome to open a new PR or a draft. If you have other ideas that aren't on the roadmap, feel free to open a new issue.
+## Test
 
-## Contributing
+```bash
+# unit tests
+$ npm run test
 
-Please see [this page](https://github.com/lyricstify/api/blob/main/CONTRIBUTING.md) for a detailed explanation of how you can contribute to this repository.
+# e2e tests
+$ npm run test:e2e
+
+# test coverage
+$ npm run test:cov
+```
+
+## Support
+
+Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+
+## Stay in touch
+
+- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
+- Website - [https://nestjs.com](https://nestjs.com/)
+- Twitter - [@nestframework](https://twitter.com/nestframework)
 
 ## License
 
-This application is licensed under the [MIT license](https://github.com/lyricstify/api/blob/main/LICENSE).
+Nest is [MIT licensed](LICENSE).
