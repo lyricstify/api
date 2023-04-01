@@ -5,7 +5,7 @@
   <p>
     <img alt="GitHub Workflow Test Status" src="https://img.shields.io/github/actions/workflow/status/lyricstify/api/test.yml?label=test&logo=github&style=flat-square&color=1ed760">
     <img alt="Code Coverage" src="https://img.shields.io/codecov/c/github/lyricstify/api?color=white&logo=codecov&style=flat-square">
-    <img alt="License" src="https://img.shields.io/github/license/lyricstify/api?style=flat-square&color=1ed760">
+    <img alt="License" src="https://img.shields.io/github/license/lyricstify/api?color=1ed760&style=flat-square">
     <img alt="NestJs Version" src="https://img.shields.io/github/package-json/dependency-version/lyricstify/api/@nestjs/core?color=white&label=nestjs&logo=nestjs&logoColor=red&style=flat-square">
     <img alt="TypeScript Version" src="https://img.shields.io/github/package-json/dependency-version/lyricstify/api/dev/typescript?color=1ed760&logo=typescript&style=flat-square">
   </p>
